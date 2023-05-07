@@ -4,6 +4,9 @@ import starImg from './assets/star.png';
 import bombImg from './assets/bomb.png';
 
 class MainScene extends Phaser.Scene {
+  public cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
+  public bomb: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+
   public preload() {
     this.load.image('sky', skyImg);
     this.load.image('ground', groundImg);
@@ -24,12 +27,23 @@ class MainScene extends Phaser.Scene {
       .refreshBody();
 
     // bomb
-    const bomb = this.physics.add.image(600, 450, 'bomb');
-    this.physics.add.collider(bomb, ground);
-    bomb.setBounce(0.5);
+    this.bomb = this.physics.add.image(200, 600, 'bomb');
+    this.physics.add.collider(this.bomb, ground);
+    this.bomb.setBounce(0.5);
+
+    // star
+    const star = this.physics.add.image(1000, 600, 'star');
+    this.physics.add.collider(star, ground);
+    star.setBounce(0.5);
+
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
   }
 
-  public update() {}
+  public update() {
+    if (this.cursorKeys.space.isDown) {
+      this.bomb.setVelocityX(100);
+    }
+  }
 }
 
 export default MainScene;
