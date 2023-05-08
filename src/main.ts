@@ -5,7 +5,7 @@ import bombImg from './assets/bomb.png';
 
 class MainScene extends Phaser.Scene {
   public cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
-  public bomb: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  public ground: Phaser.Types.Physics.Arcade.ImageWithStaticBody;
 
   public preload() {
     this.load.image('sky', skyImg);
@@ -21,20 +21,14 @@ class MainScene extends Phaser.Scene {
 
     // ground
     const staticGroup = this.physics.add.staticGroup();
-    const ground = staticGroup
+    this.ground = staticGroup
       .create(600, 900 - 16, 'ground') // 16 is half the image height
       .setScale(3)
       .refreshBody();
 
-    // bomb
-    this.bomb = this.physics.add.image(200, 600, 'bomb');
-    this.physics.add.collider(this.bomb, ground);
-    this.bomb.setBounce(0.5);
-    this.bomb.setDrag(200);
-
     // star
     const star = this.physics.add.image(1000, 600, 'star');
-    this.physics.add.collider(star, ground);
+    this.physics.add.collider(star, this.ground);
     star.setBounce(0.5);
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -47,12 +41,11 @@ class MainScene extends Phaser.Scene {
   }
 
   public fire(x: integer, y: integer) {
-    this.bomb.setVelocity(x, -y);
-  }
-
-  public reset() {
-    this.bomb.setVelocity(0, 0);
-    this.bomb.setPosition(200, 600);
+    const bomb = this.physics.add.image(200, 820, 'bomb');
+    this.physics.add.collider(bomb, this.ground, () => {
+      bomb.destroy();
+    });
+    bomb.setVelocity(x, -y);
   }
 }
 
