@@ -1,1 +1,7 @@
 @import '../node_modules/antd/dist/reset.css';
+
+#controls {
+  position: absolute;
+  left: 1rem;
+  top: 850px;
+}

@@ -27,6 +27,7 @@ window.onbeforeunload = function () {
 const container = document.createElement('div');
 document.body.appendChild(container);
 const root = createRoot(container);
+container.id = 'controls';
 root.render(
   <StrictMode>
     <App mainScene={mainScene} />

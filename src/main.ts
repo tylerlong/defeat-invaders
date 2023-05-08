@@ -42,12 +42,17 @@ class MainScene extends Phaser.Scene {
 
   public update() {
     if (this.cursorKeys.space.isDown) {
-      this.fire();
+      this.fire(500, 500);
     }
   }
 
-  public fire() {
-    this.bomb.setVelocity(500, -500);
+  public fire(x: integer, y: integer) {
+    this.bomb.setVelocity(x, -y);
+  }
+
+  public reset() {
+    this.bomb.setVelocity(0, 0);
+    this.bomb.setPosition(200, 600);
   }
 }
 
