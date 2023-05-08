@@ -30,6 +30,7 @@ class MainScene extends Phaser.Scene {
     this.bomb = this.physics.add.image(200, 600, 'bomb');
     this.physics.add.collider(this.bomb, ground);
     this.bomb.setBounce(0.5);
+    this.bomb.setDrag(200);
 
     // star
     const star = this.physics.add.image(1000, 600, 'star');
@@ -41,7 +42,7 @@ class MainScene extends Phaser.Scene {
 
   public update() {
     if (this.cursorKeys.space.isDown) {
-      this.bomb.setVelocityX(100);
+      this.bomb.setVelocity(500, -500);
     }
   }
 }
